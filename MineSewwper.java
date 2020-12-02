@@ -1,5 +1,3 @@
-package AlexandruTopalaCurs7.minesweeper;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
@@ -43,7 +41,7 @@ public class MineSewwper extends JFrame {
     }
 
     private void initComponent() {
-        gamePanel = new JPanel();// instantiem gamepanel
+        gamePanel = new JPanel();
 
         initHudPanel();
         initGame(10, 10);
@@ -102,18 +100,18 @@ public class MineSewwper extends JFrame {
 //                initGamePanel(10,10);
 //            }
 //        });
-        //TODO: adauga listener
+      
 
         hudPanel = new JPanel();
 
-        LayoutManager manager = new FlowLayout(); // buton plutitor cumva
+        LayoutManager manager = new FlowLayout();
 
         hudPanel.setLayout(manager);
         hudPanel.add(resetButton);
     }
 
     private void initGame(int rows, int columns) {
-        //trebuie sa instantiem matricea de butoane
+   
         matrix = new JButton[rows][columns];
 
         resetButton.setIcon(smileyIcon);
@@ -129,34 +127,33 @@ public class MineSewwper extends JFrame {
                 int row = i;
                 int column = j;
                 matrix[i][j].addActionListener(ev -> clcikButton(row, column));
-                // nu are merge sa pui i si j(pentru ca e o clasa locala care nu aceepta aceesarea varibilelor din ea)
-                // pentru ca i si j isi schimba valorile nu pot fi folosite
+               
             }
         }
 
-        gamePanel.revalidate(); //revaildam tabelul pentru a fi actualizat cu noile modificari
+        gamePanel.revalidate(); 
 
         generateMines(rows, columns);
-        //showMines(); // TODO: sterge asta
+        //showMines(); // TODO: Deltete 
 
     }
 
     private void generateMines(int rows, int columns) {
         Random random = new Random();
-        minesMatrix = new boolean[rows][columns]; //aici vom retine daca exista o mina la [i][j]
+        minesMatrix = new boolean[rows][columns]; 
 
         int mines = rows * columns / 6;
         int count = 0;
 
         int i;
         int j;
-        //ca sa le punem efectiv pe niste pozitii
+      
         while (count < mines) {
-            i = random.nextInt(rows); //ne genereaza de la 0 pan ala n [0,n)
+            i = random.nextInt(rows); 
             j = random.nextInt(columns);
 
             if (!minesMatrix[i][j]) {
-                minesMatrix[i][j] = true; //punem mina daca nu exista
+                minesMatrix[i][j] = true; 
                 count++; // "generam o mina"
             }
         }
@@ -179,7 +176,7 @@ public class MineSewwper extends JFrame {
     }
 
     private void mouseFlag(){
-        //sa punem un steag pe o patratica
+        //TODO: FLAG
     }
 
     private void clcikButton(int i, int j) {
@@ -201,18 +198,17 @@ public class MineSewwper extends JFrame {
     }
 
     private void expose(int i, int j) {
-        // folosim o metoda recursva care se apeleaza pe ea insasi pana nu indeplineste o cerina
+       
         if (!matrix[i][j].isEnabled()) {
             return;
         }
         int minesCount = countMines(i, j);
-        matrix[i][j].setEnabled(false);//dejactivez pentr a semnala ca l am verificat
+        matrix[i][j].setEnabled(false);
 
         if (minesCount != 0) {
-            matrix[i][j].setText(String.valueOf(minesCount));//pun mine in jurul lui
+            matrix[i][j].setText(String.valueOf(minesCount));
         } else {
-            //parcurgere recursiva
-
+          
             int rows = matrix.length;
             int columns = matrix[0].length;
 
